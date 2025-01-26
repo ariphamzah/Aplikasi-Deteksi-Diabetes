@@ -1,19 +1,14 @@
-# Gunakan image Python sebagai base
 FROM python:3.10-slim
-
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
 
 # Set working directory
 WORKDIR /app
 
-# Salin requirements.txt dan install dependency
-COPY requirements.txt /app/
+# Salin file requirements dan instal dependencies
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Salin semua file project
-COPY . /app/
+# Salin semua file ke dalam container
+COPY . .
 
-# Jalankan aplikasi
-CMD ["python", "app.py"]  # Sesuaikan dengan file utama Anda
+# Jalankan aplikasi di port 3000
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:3000", "app:app"]
