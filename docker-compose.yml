@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  flaskdiabet:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"  # Map port container ke host
+    volumes:
+      - .:/app  # Sinkronisasi file untuk pengembangan
+    restart: always
