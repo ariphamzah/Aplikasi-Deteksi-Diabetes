@@ -1,17 +1,19 @@
-# Gunakan Python sebagai base image
-FROM python:3.9-slim
+# Gunakan image Python sebagai base
+FROM python:3.10-slim
 
-# Set working directory di dalam container
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# Set working directory
 WORKDIR /app
 
-# Copy semua file ke dalam container
-COPY . .
-
-# Install dependencies
+# Salin requirements.txt dan install dependency
+COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port Flask (default 5000)
-EXPOSE 5000
+# Salin semua file project
+COPY . /app/
 
-# Jalankan aplikasi Flask
-CMD ["python", "app.py"]
+# Jalankan aplikasi
+CMD ["python", "app.py"]  # Sesuaikan dengan file utama Anda
